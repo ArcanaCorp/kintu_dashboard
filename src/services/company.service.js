@@ -11,6 +11,7 @@ export const getCompanyProfile = async () => {
         mission,
         vision,
         company_address (
+            id,
             street,
             city,
             province,
@@ -18,6 +19,7 @@ export const getCompanyProfile = async () => {
             country
         ),
         company_contact (
+            id,
             phone,
             email
         ),
@@ -35,9 +37,9 @@ export const getCompanyProfile = async () => {
             id,
             title,
             company_limits_paragraphs (
-            id,
-            paragraph,
-            order_index
+                id,
+                paragraph,
+                order_index
             )
         ),
         company_social_media (

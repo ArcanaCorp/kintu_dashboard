@@ -28,7 +28,8 @@ export default function CompanyView () {
     if (loading) return <p className="text-xs text-gray">Cargando empresa…</p>;
     if (!company) return null;
 
-    console.log(company);
+    const address = company?.company_address?.[0];
+    const contact = company?.company_contact[0];
 
     return (
 
@@ -113,16 +114,15 @@ export default function CompanyView () {
                     )}
                     {tab === 2 && (
                         <div className="flex flex-col gap-4">
-                            {company.company_slogans.map((cmp, idx) => {
-                                const last_slogan = cmp.slogan;
+                            {company.company_slogans.map((slogan, idx) => {
                                 return (
-                                    <div className="w-full" key={cmp.id}>
+                                    <div className="w-full" key={slogan.id}>
                                         <p className="text-xs text-gray mb-2">Slogan {idx + 1}</p>
                                         <EditableField
-                                            value={last_slogan}
+                                            value={slogan.slogan}
                                             onSave={v =>
-                                                CompanyRepository.updateSlogan(company.id, {
-                                                    last_slogan: v
+                                                CompanyRepository.updateSlogan(slogan.id, {
+                                                    slogan: v
                                                 })
                                             }
                                         />
@@ -133,16 +133,15 @@ export default function CompanyView () {
                     )}
                     {tab === 3 && (
                         <div className="flex flex-col gap-4">
-                            {company.company_values.map((cvalues, idx) => {
-                                const cvls = cvalues.value;
+                            {company.company_values.map((valor, idx) => {
                                 return (
-                                    <div className="w-full" key={cvalues.id}>
+                                    <div className="w-full" key={valor.id}>
                                         <p className="text-xs text-gray mb-2">Valor {idx + 1}</p>
                                         <EditableField
-                                            value={cvls}
+                                            value={valor.value}
                                             onSave={v =>
-                                                CompanyRepository.updateValue(company.id, {
-                                                    cvls: v
+                                                CompanyRepository.updateValue(valor.id, {
+                                                    value: v
                                                 })
                                             }
                                         />
@@ -151,104 +150,106 @@ export default function CompanyView () {
                             })}
                         </div>
                     )}
-                    {tab === 4 && (
-                        company.company_address.map((addr, idx) => {
-                                
-                            const city = addr.city;
-                            const country = addr.country;
-                            const province = addr.province;
-                            const region = addr.region;
-                            const street = addr.street;
-
-                            return (
-                                <div className="flex flex-col gap-4" key={idx}>
-                                    <div className="w-full">
-                                        <p className="text-xs text-gray mb-2">Dirección</p>
-                                        <EditableField
-                                            value={street}
-                                            onSave={v =>
-                                                CompanyRepository.updateAddress(company.id, {
-                                                    street: v
-                                                })
-                                            }
-                                        />
-                                    </div>
-                                    <div className="w-full">
-                                        <p className="text-xs text-gray mb-2">Ciudad</p>
-                                        <EditableField
-                                            value={city}
-                                            onSave={v =>
-                                                CompanyRepository.updateAddress(company.id, {
-                                                    city: v
-                                                })
-                                            }
-                                        />
-                                    </div>
-                                    <div className="w-full">
-                                        <p className="text-xs text-gray mb-2">Provincia</p>
-                                        <EditableField
-                                            value={province}
-                                            onSave={v =>
-                                                CompanyRepository.updateAddress(company.id, {
-                                                    province: v
-                                                })
-                                            }
-                                        />
-                                    </div>
-                                    <div className="w-full">
-                                        <p className="text-xs text-gray mb-2">Región</p>
-                                        <EditableField
-                                            value={region}
-                                            onSave={v =>
-                                                CompanyRepository.updateAddress(company.id, {
-                                                    region: v
-                                                })
-                                            }
-                                        />
-                                    </div>
-                                    <div className="w-full">
-                                        <p className="text-xs text-gray mb-2">País</p>
-                                        <EditableField
-                                            value={country}
-                                            onSave={v =>
-                                                CompanyRepository.updateAddress(company.id, {
-                                                    country: v
-                                                })
-                                            }
-                                        />
-                                    </div>
-                                </div>
-                            )
-                        })
+                    {tab === 4 && address && (
+                        <div className="flex flex-col gap-4">
+                            <div className="w-full">
+                                <p className="text-xs text-gray mb-2">Dirección</p>
+                                <EditableField
+                                    value={address.street}
+                                    onSave={v =>
+                                        CompanyRepository.updateAddress(address.id, {
+                                            street: v
+                                        })
+                                    }
+                                />
+                            </div>
+                            <div className="w-full">
+                                <p className="text-xs text-gray mb-2">Ciudad</p>
+                                <EditableField
+                                    value={address.city}
+                                    onSave={v =>
+                                        CompanyRepository.updateAddress(address.id, {
+                                            city: v
+                                        })
+                                    }
+                                />
+                            </div>
+                            <div className="w-full">
+                                <p className="text-xs text-gray mb-2">Provincia</p>
+                                <EditableField
+                                    value={address.province}
+                                    onSave={v =>
+                                        CompanyRepository.updateAddress(address.id, {
+                                            province: v
+                                        })
+                                    }
+                                />
+                            </div>
+                            <div className="w-full">
+                                <p className="text-xs text-gray mb-2">Región</p>
+                                <EditableField
+                                    value={address.region}
+                                    onSave={v =>
+                                        CompanyRepository.updateAddress(address.id, {
+                                            region: v
+                                        })
+                                    }
+                                />
+                            </div>
+                            <div className="w-full">
+                                <p className="text-xs text-gray mb-2">País</p>
+                                <EditableField
+                                    value={address.country}
+                                    onSave={v =>
+                                        CompanyRepository.updateAddress(address.id, {
+                                            country: v
+                                        })
+                                    }
+                                />
+                            </div>
+                        </div>
                     )}
-                    {tab === 5 && (
+                    {tab === 5 && contact && (
                         <div className="flex flex-col gap-4">
                             <div className="w-full">
                                 <p className="text-xs text-gray mb-2">Email</p>
-                                {company?.company_contact[0].email && (
-                                    <EditableField
-                                        value={company?.company_contact[0].email}
-                                        onSave={v =>
-                                            CompanyRepository.updateContact(company.id, {
-                                                email: v
-                                            })
-                                        }
-                                    />
-                                )}
+                                <EditableField
+                                    value={contact.email}
+                                    onSave={v =>
+                                        CompanyRepository.updateContact(contact.id, {
+                                            email: v
+                                        })
+                                    }
+                                />
                             </div>
                             <div className="w-full">
                                 <p className="text-xs text-gray mb-2">Teléfono</p>
-                                {company?.company_contact[0].phone && (
+                                <EditableField
+                                    value={contact.phone}
+                                    onSave={v =>
+                                        CompanyRepository.updateContact(contact.id, {
+                                            phone: v
+                                        })
+                                    }
+                                />
+                            </div>
+                        </div>
+                    )}
+                    {tab === 6 && (
+                        <div className="flex flex-col gap-4">
+                            {company.company_social_media.map((social) => (
+                                <div className="w-full" key={social.id}>
+                                    <p className="text-xs text-gray mb-2">{social.platform}</p>
                                     <EditableField
-                                        value={company?.company_contact[0].phone}
+                                        value={social.url}
                                         onSave={v =>
-                                            CompanyRepository.updateContact(company.id, {
-                                                phone: v
+                                            CompanyRepository.updateSocialMedia(social.id, {
+                                                url: v
                                             })
                                         }
                                     />
-                                )}
-                            </div>
+                                </div>
+                            ))}
                         </div>
                     )}
                 </div>
