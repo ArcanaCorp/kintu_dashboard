@@ -56,33 +56,45 @@ export default function CompanyView () {
                                 <p className="text-xs text-gray mb-2">Nombre Legal</p>
                                 <EditableField
                                     value={company.legal_name}
-                                    onSave={v =>
-                                        CompanyRepository.updateCompany(company.id, {
+                                    onSave={async (v) => {
+                                        const updated = await CompanyRepository.updateCompany(company.id, {
                                             legal_name: v
                                         })
-                                    }
+                                        setCompany(prev => ({
+                                            ...prev,
+                                            legal_name: updated.legal_name
+                                        }))
+                                    }}
                                 />
                             </div>
                             <div className="w-full">
                                 <p className="text-xs text-gray mb-2">Nombre Comercial</p>
                                 <EditableField
                                     value={company.brand_name}
-                                    onSave={v =>
-                                        CompanyRepository.updateCompany(company.id, {
+                                    onSave={async (v) => {
+                                        const updated = await CompanyRepository.updateCompany(company.id, {
                                             brand_name: v
                                         })
-                                    }
+                                        setCompany(prev => ({
+                                            ...prev,
+                                            brand_name: updated.brand_name
+                                        }))
+                                    }}
                                 />
                             </div>
                             <div className="w-full">
                                 <p className="text-xs text-gray mb-2">Descripción</p>
                                 <EditableField
                                     value={company.description}
-                                    onSave={v =>
-                                        CompanyRepository.updateCompany(company.id, {
+                                    onSave={async (v) => {
+                                        const updated = await CompanyRepository.updateCompany(company.id, {
                                             description: v
                                         })
-                                    }
+                                        setCompany(prev => ({
+                                            ...prev,
+                                            description: updated.description
+                                        }))
+                                    }}
                                     type="textarea"
                                 />
                             </div>
@@ -90,11 +102,15 @@ export default function CompanyView () {
                                 <p className="text-xs text-gray mb-2">Misión</p>
                                 <EditableField
                                     value={company.mission}
-                                    onSave={v =>
-                                        CompanyRepository.updateCompany(company.id, {
+                                    onSave={async (v) => {
+                                        const updated = await CompanyRepository.updateCompany(company.id, {
                                             mission: v
                                         })
-                                    }
+                                        setCompany(prev => ({
+                                            ...prev,
+                                            mission: updated.mission
+                                        }))
+                                    }}
                                     type="textarea"
                                 />
                             </div>
@@ -102,11 +118,15 @@ export default function CompanyView () {
                                 <p className="text-xs text-gray mb-2">Visión</p>
                                 <EditableField
                                     value={company.vision}
-                                    onSave={v =>
-                                        CompanyRepository.updateCompany(company.id, {
+                                    onSave={async (v) => {
+                                        const updated = await CompanyRepository.updateCompany(company.id, {
                                             vision: v
                                         })
-                                    }
+                                        setCompany(prev => ({
+                                            ...prev,
+                                            vision: updated.vision
+                                        }))
+                                    }}
                                     type="textarea"
                                 />
                             </div>
@@ -120,11 +140,17 @@ export default function CompanyView () {
                                         <p className="text-xs text-gray mb-2">Slogan {idx + 1}</p>
                                         <EditableField
                                             value={slogan.slogan}
-                                            onSave={v =>
-                                                CompanyRepository.updateSlogan(slogan.id, {
+                                            onSave={async (v) => {
+                                                const updated = await CompanyRepository.updateSlogan(slogan.id, {
                                                     slogan: v
                                                 })
-                                            }
+                                                setCompany(prev => ({
+                                                    ...prev,
+                                                    company_slogans: prev.company_slogans.map(s =>
+                                                        s.id === slogan.id ? updated : s
+                                                    )
+                                                }));
+                                            }}
                                         />
                                     </div>
                                 )
@@ -139,11 +165,18 @@ export default function CompanyView () {
                                         <p className="text-xs text-gray mb-2">Valor {idx + 1}</p>
                                         <EditableField
                                             value={valor.value}
-                                            onSave={v =>
-                                                CompanyRepository.updateValue(valor.id, {
+                                            onSave={async (v) => {
+                                                const updated = await CompanyRepository.updateValue(valor.id, {
                                                     value: v
-                                                })
-                                            }
+                                                });
+
+                                                setCompany(prev => ({
+                                                    ...prev,
+                                                    company_values: prev.company_values.map(val =>
+                                                        val.id === valor.id ? updated : val
+                                                    )
+                                                }));
+                                            }}
                                         />
                                     </div>
                                 )
@@ -156,55 +189,80 @@ export default function CompanyView () {
                                 <p className="text-xs text-gray mb-2">Dirección</p>
                                 <EditableField
                                     value={address.street}
-                                    onSave={v =>
-                                        CompanyRepository.updateAddress(address.id, {
+                                    onSave={async (v) => {
+                                        const updated = await CompanyRepository.updateAddress(address.id, {
                                             street: v
-                                        })
-                                    }
+                                        });
+
+                                        setCompany(prev => ({
+                                            ...prev,
+                                            company_address: [updated]
+                                        }));
+                                    }}
                                 />
                             </div>
                             <div className="w-full">
                                 <p className="text-xs text-gray mb-2">Ciudad</p>
                                 <EditableField
                                     value={address.city}
-                                    onSave={v =>
-                                        CompanyRepository.updateAddress(address.id, {
+                                    onSave={async (v) => {
+                                        const updated = await CompanyRepository.updateAddress(address.id, {
                                             city: v
-                                        })
-                                    }
+                                        });
+
+                                        setCompany(prev => ({
+                                            ...prev,
+                                            company_address: [updated]
+                                        }));
+                                    }}
                                 />
                             </div>
                             <div className="w-full">
                                 <p className="text-xs text-gray mb-2">Provincia</p>
                                 <EditableField
                                     value={address.province}
-                                    onSave={v =>
-                                        CompanyRepository.updateAddress(address.id, {
+                                    onSave={async (v) => {
+                                        const updated = await CompanyRepository.updateAddress(address.id, {
                                             province: v
-                                        })
-                                    }
+                                        });
+
+                                        setCompany(prev => ({
+                                            ...prev,
+                                            company_address: [updated]
+                                        }));
+                                    }}
                                 />
                             </div>
                             <div className="w-full">
                                 <p className="text-xs text-gray mb-2">Región</p>
                                 <EditableField
                                     value={address.region}
-                                    onSave={v =>
-                                        CompanyRepository.updateAddress(address.id, {
+                                    onSave={async (v) => {
+                                        const updated = await CompanyRepository.updateAddress(address.id, {
                                             region: v
-                                        })
-                                    }
+                                        });
+
+                                        setCompany(prev => ({
+                                            ...prev,
+                                            company_address: [updated]
+                                        }));
+                                    }}
                                 />
                             </div>
                             <div className="w-full">
                                 <p className="text-xs text-gray mb-2">País</p>
                                 <EditableField
                                     value={address.country}
-                                    onSave={v =>
-                                        CompanyRepository.updateAddress(address.id, {
+                                    onSave={async (v) => {
+                                        const updated = await CompanyRepository.updateAddress(address.id, {
                                             country: v
-                                        })
-                                    }
+                                        });
+
+                                        setCompany(prev => ({
+                                            ...prev,
+                                            company_address: [updated]
+                                        }));
+                                    }}
                                 />
                             </div>
                         </div>
@@ -215,22 +273,32 @@ export default function CompanyView () {
                                 <p className="text-xs text-gray mb-2">Email</p>
                                 <EditableField
                                     value={contact.email}
-                                    onSave={v =>
-                                        CompanyRepository.updateContact(contact.id, {
+                                    onSave={async (v) => {
+                                        const updated = await CompanyRepository.updateContact(contact.id, {
                                             email: v
-                                        })
-                                    }
+                                        });
+
+                                        setCompany(prev => ({
+                                            ...prev,
+                                            company_contact: [updated]
+                                        }));
+                                    }}
                                 />
                             </div>
                             <div className="w-full">
                                 <p className="text-xs text-gray mb-2">Teléfono</p>
                                 <EditableField
                                     value={contact.phone}
-                                    onSave={v =>
-                                        CompanyRepository.updateContact(contact.id, {
+                                    onSave={async (v) => {
+                                        const updated = await CompanyRepository.updateContact(contact.id, {
                                             phone: v
-                                        })
-                                    }
+                                        });
+
+                                        setCompany(prev => ({
+                                            ...prev,
+                                            company_contact: [updated]
+                                        }));
+                                    }}
                                 />
                             </div>
                         </div>
@@ -242,11 +310,19 @@ export default function CompanyView () {
                                     <p className="text-xs text-gray mb-2">{social.platform}</p>
                                     <EditableField
                                         value={social.url}
-                                        onSave={v =>
-                                            CompanyRepository.updateSocialMedia(social.id, {
-                                                url: v
-                                            })
-                                        }
+                                        onSave={async (v) => {
+                                            const updated = await CompanyRepository.updateSocialMedia(
+                                                social.id,
+                                                { url: v }
+                                            );
+
+                                            setCompany(prev => ({
+                                                ...prev,
+                                                company_social_media: prev.company_social_media.map(sm =>
+                                                    sm.id === social.id ? updated : sm
+                                                )
+                                            }));
+                                        }}
                                     />
                                 </div>
                             ))}

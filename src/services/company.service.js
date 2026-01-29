@@ -57,60 +57,75 @@ export const getCompanyProfile = async () => {
 
 export const CompanyRepository = {
 
-    updateCompany(id, payload) {
-        return supabase
-            .from("company")
-            .update(payload)
-            .eq("id", id);
+    async updateCompany(id, payload) {
+        const { data, error } = await supabase
+        .from("company")
+        .update(payload)
+        .eq("id", id)
+        .select()
+        .single();
+
+        if (error) throw error;
+        return data;
     },
 
-    updateAddress(id, payload) {
-        return supabase
-            .from("company_address")
-            .update(payload)
-            .eq("id", id);
+    async updateAddress(id, payload) {
+        const { data, error } = await supabase
+        .from("company_address")
+        .update(payload)
+        .eq("id", id)
+        .select()
+        .single();
+
+        if (error) throw error;
+        return data;
     },
 
-    updateContact(id, payload) {
-        return supabase
-            .from("company_contact")
-            .update(payload)
-            .eq("id", id);
+    async updateContact(id, payload) {
+        const { data, error } = await supabase
+        .from("company_contact")
+        .update(payload)
+        .eq("id", id)
+        .select()
+        .single();
+
+        if (error) throw error;
+        return data;
     },
 
-    updateValue(id, payload) {
-        return supabase
-            .from("company_values")
-            .update(payload)
-            .eq("id", id);
+    async updateValue(id, payload) {
+        const { data, error } = await supabase
+        .from("company_values")
+        .update(payload)
+        .eq("id", id)
+        .select()
+        .single();
+
+        if (error) throw error;
+        return data;
     },
 
-    updateSlogan(id, payload) {
-        return supabase
-            .from("company_slogans")
-            .update(payload)
-            .eq("id", id);
+    async updateSlogan(id, payload) {
+        const { data, error } = await supabase
+        .from("company_slogans")
+        .update(payload)
+        .eq("id", id)
+        .select()
+        .single();
+
+        if (error) throw error;
+        return data;
     },
 
-    updateLimit(id, payload) {
-        return supabase
-            .from("company_limits")
-            .update(payload)
-            .eq("id", id);
-    },
+    async updateSocialMedia(id, payload) {
+        const { data, error } = await supabase
+        .from("company_social_media")
+        .update(payload)
+        .eq("id", id)
+        .select()
+        .single();
 
-    updateLimitParagraph(id, payload) {
-        return supabase
-            .from("company_limits_paragraphs")
-            .update(payload)
-            .eq("id", id);
-    },
-
-    updateSocialMedia(id, payload) {
-        return supabase
-            .from("company_social_media")
-            .update(payload)
-            .eq("id", id);
+        if (error) throw error;
+        return data;
     }
-
 };
