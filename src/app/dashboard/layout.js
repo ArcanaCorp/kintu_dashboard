@@ -9,7 +9,7 @@ export default function DashboardLayout () {
 
             <Nav/>
 
-            <main className="w h-screen p-4" style={{"--w": "calc(100dvw - 250px)"}}>
+            <main className="w h-screen p-4 scroll-y" style={{"--w": "calc(100dvw - 250px)"}}>
                 <Outlet/>
             </main>
 

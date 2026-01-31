@@ -15,12 +15,16 @@
 
     /* Estados */
     --color-success: #16A34A;
+    --color-success-transparent: rgb(22, 163, 74, .2);
 
     --color-warning: #F59E0B;
     --color-warning-transparent: rgb(245, 158, 11, .2);
 
     --color-danger: #DC2626;
     --color-danger-transparent: rgb(220, 38, 38, .2);
+
+    --color-info: #1684fa;
+    --color-info-transparent: rgb(22, 132, 250, .2);
 
     --color-experience: #cedc00;
 

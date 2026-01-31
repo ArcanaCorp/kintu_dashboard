@@ -6,6 +6,8 @@ import ProtectedRoute from "./protected.route";
 import PublicRoute from "./public.route";
 import HomeView from "../app/dashboard";
 import CompanyView from "../app/dashboard/company";
+import ExperiencesView from "../app/dashboard/experiences";
+import Bookins from "../app/dashboard/bookins";
 
 export const routes = createBrowserRouter([
     {
@@ -38,10 +40,12 @@ export const routes = createBrowserRouter([
                         element: <CompanyView/>
                     },
                     {
-                        path: '/dashboard/experiences'
+                        path: '/dashboard/experiences',
+                        element: <ExperiencesView/>
                     },
                     {
-                        path: '/dashboard/bookings'
+                        path: '/dashboard/bookings',
+                        element: <Bookins/>
                     },
                     {
                         path: '/dashboard/blog'

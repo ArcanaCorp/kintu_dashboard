@@ -205,6 +205,7 @@
 .text-success { color: var(--color-success); }
 .text-warning { color: var(--color-warning); }
 .text-danger { color: var(--color-danger); }
+.text-info { color: var(--color-info); }
 
 .text-fs { font-size: var(--fs); }
 .text-xs { font-size: var(--fs-xs); }
@@ -240,8 +241,8 @@
 
 .bg-warning { background-color: var(--color-warning); }
 .bg-warning-transparent { background-color: var(--color-warning-transparent); }
-
 .bg-danger-transparent { background-color: var(--color-danger-transparent); }
+.bg-info-transparent { background-color: var(--color-info-transparent); }
 
 .bg-mask::before {
     content: "";
