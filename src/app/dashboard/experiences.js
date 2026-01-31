@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom"
-import { getExperiences } from "../../services/experiences.service";
+import { deleteExperience, getExperiences } from "../../services/experiences.service";
+import EditExperiences from "../views/experiences/Edit";
+import CreateExperience from "../views/experiences/Create";
+import { toast } from "sonner";
 
 export default function ExperiencesView () {
 
@@ -9,8 +12,44 @@ export default function ExperiencesView () {
     const [ loading, setLoading ] = useState(true);
     const [ action, setAction ] = useState({
         type: '',
-        id: ''
+        values: null
     })
+
+    const onDelete = async (id) => {
+        const toastId = toast.loading("Eliminando experiencia...");
+        try {
+            
+            await deleteExperience(id);
+            setList(list.filter(itm => itm.id !== id))
+            toast.dismiss(toastId)
+            toast.success(`Éxito`, {
+                description: 'Se eliminó correctamente la experiencia.'
+            })
+
+        } catch (error) {
+            toast.error(`No se pudo eliminar la experiencia`, {
+                id: toastId
+            });
+            console.error(error);
+        }
+    }
+
+    const handleDelete = async (id) => {
+        try {
+            toast('¿Deseas eliminar esta experiencia?', {
+                action: {
+                    label: 'Sí, eliminar',
+                    onClick: () => onDelete(id)
+                },
+                cancel: {
+                    label: 'No, cancelar'
+                }
+            })
+        } catch (error) {
+            toast.error(`Error: ${error.message}`)
+            console.error(`Error: ${error.message}`);
+        }
+    }
 
     useEffect(() => {
         const load = async () => {
@@ -33,15 +72,20 @@ export default function ExperiencesView () {
 
         <>
         
-            <p className="text-xs text-gray">{location.pathname}</p>
-            <h1 className="mb-4">Experiencias</h1>
+            <div className="w-full flex items-center justify-between">
+                <div>
+                    <p className="text-xs text-gray">{location.pathname}</p>
+                    <h1 className="mb-4">Experiencias</h1>
+                </div>
+                <button className="bg-primary text-white rounded-md ph-4 pv-2" onClick={() => setAction({type: 'create'})}>Crear experiencia</button>
+            </div>
 
             <div className="w-full flex gap-4">
                 <div className="w-full grid grid-cols gap-4 p-2" style={{"--grid-cols":`repeat(${action.type !== '' ? '2' : '4'}, 1fr)`}}>
                     {list.map((item) => {
 
-                        const bgImage = item.experience_images.filter((i) => i.is_cover === true)
-                        const url = bgImage[0].image_url;
+                        const bgImage = item?.experience_images ? item?.experience_images.filter((i) => i.is_cover === true) : []
+                        const url = bgImage[0]?.image_url || '';
 
                         return (
                             <div key={item.id} className="w-full bg-white rounded-md border">
@@ -52,8 +96,8 @@ export default function ExperiencesView () {
                                     <p className="text-xs text-gray">{item.experience_name}</p>
                                     <h3>{item.tour_name}</h3>
                                     <div className="flex gap-2">
-                                        <button className="w-full h rounded-md bg-danger-transparent text-danger" style={{"--h": "40px"}}>Eliminar</button>
-                                        <button className="w-full h rounded-md bg-info-transparent text-info" style={{"--h": "40px"}} onClick={() => setAction({type: 'edit', id: item.id})}>Editar</button>
+                                        <button className="w-full h rounded-md bg-danger-transparent text-danger" style={{"--h": "40px"}} onClick={() => handleDelete(item.id)}>Eliminar</button>
+                                        <button className="w-full h rounded-md bg-info-transparent text-info" style={{"--h": "40px"}} onClick={() => setAction({type: 'edit', values: item})}>Editar</button>
                                     </div>
                                 </div>
                             </div>
@@ -61,7 +105,10 @@ export default function ExperiencesView () {
                     })}
                 </div>
                 {action.type !== '' && (
-                    <div className="w bg-white border p-2" style={{"--w": "400px"}}></div>
+                    <div className="w h bg-white border p-2 scroll-y" style={{"--w": "400px", "--h": "calc(100dvh - 120px)"}}>
+                        {action.type === 'edit' && (<EditExperiences values={action.values} action={setAction} update={setList} />)}
+                        {action.type === 'create' && (<CreateExperience list={list} action={setAction} update={setList}/>)}
+                    </div>
                 )}
             </div>
 

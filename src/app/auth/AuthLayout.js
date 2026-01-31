@@ -7,7 +7,7 @@ export default function AuthLayout () {
             <div className="w-screen h-screen grid-center">
                 <Outlet/>
             </div>
-            <Toaster position="top-center" duration={3000} closeButton />
+            <Toaster position="top-center" duration={3000} closeButton richColors />
         </>
     )
 }

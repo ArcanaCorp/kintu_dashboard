@@ -123,6 +123,11 @@
 .mb-6 { margin-bottom: var(--space-6); }
 .mb-8 { margin-bottom: var(--space-8); }
 
+.mv-2 { margin-top: var(--space-2); margin-bottom: var(--space-2); }
+.mv-4 { margin-top: var(--space-4); margin-bottom: var(--space-4); }
+.mv-6 { margin-top: var(--space-6); margin-bottom: var(--space-6); }
+.mv-8 { margin-top: var(--space-8); margin-bottom: var(--space-8); }
+
 /* =====================================================
    SIZE
 ===================================================== */
