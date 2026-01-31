@@ -8,6 +8,7 @@ import HomeView from "../app/dashboard";
 import CompanyView from "../app/dashboard/company";
 import ExperiencesView from "../app/dashboard/experiences";
 import Bookins from "../app/dashboard/bookins";
+import Loading from "../app/dashboard/loading";
 
 export const routes = createBrowserRouter([
     {
@@ -48,16 +49,20 @@ export const routes = createBrowserRouter([
                         element: <Bookins/>
                     },
                     {
-                        path: '/dashboard/blog'
+                        path: '/dashboard/blog',
+                        element: <Loading/>
                     },
                     {
-                        path: '/dashboard/faqs'
+                        path: '/dashboard/faqs',
+                        element: <Loading/>
                     },
                     {
-                        path: '/dashboard/users'
+                        path: '/dashboard/users',
+                        element: <Loading/>
                     },
                     {
-                        path: '/dashboard/settings'
+                        path: '/dashboard/settings',
+                        element: <Loading/>
                     }
                 ],
             },
