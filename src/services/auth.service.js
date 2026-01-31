@@ -1,6 +1,6 @@
 import { supabase } from "@/libs/supabase";
 
-export const login = async (username, password) => {
+export const serviceLogin = async (username, password) => {
     try {
         const { data, error } = await supabase.rpc("login_user", {
             p_username: username,

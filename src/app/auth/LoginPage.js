@@ -1,9 +1,12 @@
 import { useState } from "react"
 import { toast } from "sonner";
-import { login } from "../../services/auth.service";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
+import { serviceLogin } from "@/services/auth.service";
 
 export default function LoginPage () {
+
+    const { login } = useAuth();
 
     const navigate = useNavigate();
     const [ form, setForm ] = useState({
@@ -24,9 +27,9 @@ export default function LoginPage () {
         try {
             if (!form.username || !form.password) return toast('Ingresa los datos completos')
             setLoading(true)
-            const user = await login(form.username, form.password)
+            const user = await serviceLogin(form.username, form.password)
             const payload = {id: user.user_id, name: user.username, roles: user.roles}
-            localStorage.setItem("session", JSON.stringify(payload));
+            login(payload);
             toast('Incio de sesión exitoso!')
             navigate('/dashboard')
         } catch (error) {
