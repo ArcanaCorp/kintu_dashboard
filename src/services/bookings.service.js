@@ -29,3 +29,15 @@ export const getBookings = async () => {
         throw error;
     }
 };
+
+export const updateBookingStatus = async (id, status) => {
+    const { data, error } = await supabase
+        .from('bookings')
+        .update({status})
+        .eq('id', id)
+        .select()
+        .single()
+    
+    if (error) throw error
+    return data;
+}

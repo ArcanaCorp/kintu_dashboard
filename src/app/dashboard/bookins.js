@@ -1,12 +1,19 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { getBookings } from "../../services/bookings.service";
+import RowsBooks from "../../components/Books/Rows";
 
 export default function Bookings() {
 
     const location = useLocation();
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    const handleUpdateStatus = (id, newStatus) => {
+        setBookings(prev =>
+            prev.map(b => b.id === id ? { ...b, status: newStatus } : b)
+        );
+    }
 
     useEffect(() => {
         const load = async () => {
@@ -21,12 +28,6 @@ export default function Bookings() {
         };
         load();
     }, []);
-
-    const formatDate = (date) =>
-        new Date(date).toLocaleDateString("es-PE");
-
-    const formatPrice = (price, currency) =>
-        `${currency} ${Number(price).toFixed(2)}`;
 
     return (
         <>
@@ -66,34 +67,7 @@ export default function Bookings() {
                         )}
 
                         {!loading && bookings.map((book) => (
-                            <tr key={book.id} className="border-t hover:bg-secondary">
-                                <td className="text-xs p-2">{book.id.slice(0, 8)}</td>
-                                <td className="text-xs p-2">
-                                    {book.experiences?.tour_name}
-                                </td>
-                                <td className="text-xs p-2">
-                                    {formatDate(book.travel_date)}
-                                </td>
-                                <td className="text-center text-xs p-2">
-                                    {book.number_of_people}
-                                </td>
-                                <td className="text-right text-xs p-2">
-                                    {formatPrice(book.total_price, book.currency)}
-                                </td>
-                                <td className="text-xs p-2">
-                                    {book.payment_method || "—"}
-                                </td>
-                                <td className="text-center text-xs p-2">
-                                    <span className="px-2 py-1 rounded-md bg-info-transparent text-info">
-                                        {book.status}
-                                    </span>
-                                </td>
-                                <td className="text-center text-xs p-2">
-                                    <button className="text-info">
-                                        Ver
-                                    </button>
-                                </td>
-                            </tr>
+                            <RowsBooks key={book.id} book={book} onUpdateStatus={handleUpdateStatus} />
                         ))}
                     </tbody>
                 </table>

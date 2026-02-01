@@ -246,7 +246,14 @@
 
 .bg-warning { background-color: var(--color-warning); }
 .bg-warning-transparent { background-color: var(--color-warning-transparent); }
+
+.bg-success { background-color: var(--color-success); }
+.bg-success-transparent { background-color: var(--color-success-transparent); }
+
+.bg-danger { background-color: var(--color-danger); }
 .bg-danger-transparent { background-color: var(--color-danger-transparent); }
+
+.bg-info { background-color: var(--color-info); }
 .bg-info-transparent { background-color: var(--color-info-transparent); }
 
 .bg-mask::before {
