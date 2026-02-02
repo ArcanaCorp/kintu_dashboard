@@ -35,6 +35,11 @@ export default function Nav () {
                     </Link>
                 </li>
                 <li>
+                    <Link to={'/dashboard/whatsapp'} className={`flex w-full h items-center ph-2 gap-2 rounded-md ${location.pathname === '/dashboard/bookings' ? 'text-semibold bg-secondary': 'text-medium'}`} style={{"--h": "40px"}}>
+                        <Icon name={'whatsapp'}/> WhatsApp
+                    </Link>
+                </li>
+                <li>
                     <Link to={'/dashboard/blog'} className={`flex w-full h items-center ph-2 gap-2 rounded-md ${location.pathname === '/dashboard/blog' ? 'text-semibold bg-secondary': 'text-medium'}`} style={{"--h": "40px"}}>
                         <Icon name={'blogs'}/> Blog
                     </Link>

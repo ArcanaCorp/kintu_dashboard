@@ -1,4 +1,4 @@
-import { IconBooks, IconBuildingSkyscraper, IconEye, IconHome, IconListDetails, IconListNumbers, IconLogout, IconQuestionMark, IconSettings2, IconUsers } from "@tabler/icons-react";
+import { IconBooks, IconBrandWhatsapp, IconBuildingSkyscraper, IconEye, IconHome, IconListDetails, IconListNumbers, IconLogout, IconQuestionMark, IconSettings2, IconUsers } from "@tabler/icons-react";
 
 const ICONS = {
     'home': IconHome,
@@ -10,7 +10,8 @@ const ICONS = {
     'users': IconUsers,
     'settings': IconSettings2,
     'logout': IconLogout,
-    'eye': IconEye
+    'eye': IconEye,
+    'whatsapp': IconBrandWhatsapp
 }
 
 const ICON_SIZES = {
