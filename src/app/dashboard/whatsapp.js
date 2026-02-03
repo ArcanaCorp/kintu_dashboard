@@ -13,16 +13,16 @@ export default function WhatsappView () {
     const refresh = async () => {
         try {
             const currentStatus = await fetchStatus()
-            setStatus(currentStatus)
+            setStatus(currentStatus.status)
             setError(false)
 
-            if (currentStatus === "QR") {
+            if (currentStatus.status === "QR") {
                 const qrData = await fetchQr()
                 if (qrData) {
                 setQr(qrData)
                 setHint("Escanea el QR desde WhatsApp")
                 }
-            } else if (currentStatus === "READY") {
+            } else if (currentStatus.status === "READY") {
                 setQr(null)
                 setHint("WhatsApp conectado correctamente")
             } else {
