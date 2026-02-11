@@ -134,7 +134,7 @@ export default function EditBlog ({ values, action, update }) {
 
                 <div className="w-full">
                     <label className="block text-xs text-gray mb-2">Ingresa el resumen del blog</label>
-                    <ContentEditable value={formData.content} to={'summary'} onChange={handleChange} />
+                    <ContentEditable value={formData.summary} to={'summary'} onChange={handleChange} />
                 </div>
 
                 <div className="w-full">
