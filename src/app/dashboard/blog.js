@@ -32,13 +32,6 @@ export default function BlogView () {
         }
     }
 
-    const onUpdate = (blog) => {
-        setBlogs(prev => ({
-            blog,
-            ...prev,
-        }))
-    }
-
     const handleDelete = async (id) => {
         try {
             toast('¿Deseas eliminar este blog?', {
@@ -103,7 +96,7 @@ export default function BlogView () {
                                                 <img src={b.cover} alt={`${b.titulo}`} />
                                             </div>
                                             <div className="w-full p-2 flex flex-col gap-2 justify-between">
-                                                <p className="text-xs text-gray">{b.category}</p>
+                                                <p className="text-xs text-gray">{b.category} · {b.published ? 'Publicado' : 'No visible'}</p>
                                                 <h3>{b.titulo}</h3>
                                                 <div className="flex gap-2">
                                                     <button className="w-full h rounded-md bg-danger-transparent text-danger" style={{"--h": "40px"}} onClick={() => handleDelete(b.id)}>Eliminar</button>
@@ -126,7 +119,7 @@ export default function BlogView () {
                         </div>
                         <div className="w-full h pv-2" style={{"--h": "calc(100% - 40px)"}}>
                             {action.type === 'edit' && ( <EditBlog values={action.values} action={setAction} update={setBlogs} /> )}
-                            {action.type === 'created' && ( <CreateBlog update={onUpdate} /> )}
+                            {action.type === 'created' && ( <CreateBlog update={setBlogs} action={setAction}/> )}
                         </div>
                     </div>
                 )}

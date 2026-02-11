@@ -5,6 +5,7 @@ import Heading from '@tiptap/extension-heading'
 import { TextStyle, FontSize } from '@tiptap/extension-text-style'
 import Placeholder from '@tiptap/extension-placeholder'
 import Image from '@tiptap/extension-image'
+import { useEffect } from 'react'
 
 export default function ContentEditable ({ value, to, onChange }) {
 
@@ -31,13 +32,19 @@ export default function ContentEditable ({ value, to, onChange }) {
         }
     })
 
+    useEffect(() => {
+        if (editor && value) {
+            editor.commands.setContent(value, false)
+        }
+    }, [editor, value])
+
     if (!editor) return null
 
     return (
 
         <div className="w-full border rounded-sm">
             <MenuBar editor={editor} to={to} />
-            <EditorContent className='p-2' placeholder='Ingresa el texto' editor={editor} />
+            <EditorContent className='p-2' value={value} placeholder='Ingresa el texto' editor={editor} />
         </div>
 
     )

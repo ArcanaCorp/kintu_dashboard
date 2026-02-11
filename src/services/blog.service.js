@@ -5,7 +5,6 @@ export const getBlogs = async () => {
         const { data, error } = await supabase
             .from('blogs')
             .select('*')
-            .eq("published", true)
             .order("created_at", { ascending: false });
 
         if (error) throw error;
@@ -26,7 +25,7 @@ export const generateSlug = (text) =>
 
 export async function createBlog(formData) {
     
-    const { titulo, category, summary, content, slug, cover } = formData
+    const { titulo, category, summary, content, slug, cover, published } = formData
 
     if (!titulo || !category || !content) {
         throw new Error('Datos obligatorios incompletos')
@@ -42,7 +41,7 @@ export async function createBlog(formData) {
                 summary,
                 content,
                 cover,
-                published: false,
+                published,
             },
         ])
         .select()
@@ -50,6 +49,47 @@ export async function createBlog(formData) {
 
     if (error) {
         console.error('Error creando blog:', error)
+        throw error
+    }
+
+    return data
+}
+
+export async function updateBlog(formData) {
+
+    const { id, titulo, category, summary, content, cover, slug, published } = formData
+
+    if (!id || !slug) {
+        throw new Error('ID y slug son obligatorios para actualizar el blog')
+    }
+
+    let coverUrl = cover
+
+    // 👉 Si el cover es un File, lo reemplazamos
+    if (cover instanceof File) {
+        coverUrl = await uploadCoverImage({
+            file: cover,
+            slug,
+        })
+    }
+
+    const { data, error } = await supabase
+        .from('blogs')
+        .update({
+            titulo,
+            category,
+            summary,
+            content,
+            published,
+            cover: coverUrl,
+            updated_at: new Date().toISOString(),
+        })
+        .eq('id', id)
+        .select()
+        .single()
+
+    if (error) {
+        console.error('Error actualizando blog:', error)
         throw error
     }
 

@@ -4,14 +4,15 @@ import { toast } from "sonner";
 import { createBlog, generateSlug, uploadCoverImage } from "../../../services/blog.service";
 import { IconPhoto } from "@tabler/icons-react";
 
-export default function CreateBlog ({ update }) {
+export default function CreateBlog ({ update, action }) {
 
     const [ formData, setFormData ] = useState({
         titulo: '',
         category: '',
         summary: '',
         content: '',
-        cover: ''
+        cover: '',
+        published: false
     })
     const [coverPreview, setCoverPreview] = useState(null)
     const [ loading, setLoading ] = useState(false)
@@ -58,8 +59,9 @@ export default function CreateBlog ({ update }) {
                     cover: coverUrl
                 });
 
-                update(data)
+                update(prev => [data, ...prev])
                 toast.success('Éxito', { description: 'Se subió correctamente el blog' })
+                action({type: '', values: null})
 
         } catch (error) {
             console.error(error);
@@ -76,11 +78,18 @@ export default function CreateBlog ({ update }) {
             <div className="w-full flex flex-col gap-4">
 
                 <div className="w-full">
-                    <label className="grid-center w-full h bg-secondary rounded-sm pointer" htmlFor="fileCover" style={{"--h": "200px"}}>
+                    <label className="flex items-center gap-2 text-sm">
+                        <input type="checkbox" id="published" name="published" checked={formData.published} onChange={(e) => setFormData(prev => ({...prev, published: !formData.published}))}/>
+                        {formData.published ? 'Publicado' : 'No publicado'}
+                    </label>
+                </div>
+
+                <div className="w-full">
+                    <label className="grid-center w-full h bg-secondary rounded-sm pointer overflow-hidden" htmlFor="fileCover" style={{"--h": "200px"}}>
                         {formData.cover === '' ? (
                             <IconPhoto/>
                         ) : (
-                            <img src={coverPreview} alt={`${formData.titulo}`} />
+                            <img src={coverPreview} style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center'}} alt={`${formData.titulo}`} />
                         )}
                     </label>
                     <input type="file" onChange={handleFileChange} accept="image/*" id="fileCover" hidden/>
@@ -106,8 +115,8 @@ export default function CreateBlog ({ update }) {
                     <ContentEditable value={formData.content} to={'content'} onChange={handleChange} />
                 </div>
                 <div className="w-full flex gap-2">
-                    <button className="w-full h rounded-md bg-secondary" style={{"--h": "40px"}}>Cancelar</button>
-                    <button className="w-full h rounded-md bg-primary text-white" style={{"--h": "40px"}} onClick={handleCreateBlog} disabled={loading}>Crear</button>
+                    <button className="w-full h rounded-md bg-secondary" style={{"--h": "40px"}} onClick={() => action({type: '', values: null})}>Cancelar</button>
+                    <button className="w-full h rounded-md bg-primary text-white" style={{"--h": "40px"}} onClick={handleCreateBlog} disabled={loading}>{loading ? 'Creando...' : 'Crear blog'}</button>
                 </div>
 
             </div>
