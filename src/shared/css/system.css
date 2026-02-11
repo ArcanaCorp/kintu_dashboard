@@ -6,6 +6,7 @@
 .block { display: block; }
 .inline { display: inline; }
 .hidden { display: none; }
+.inline-block { display: inline-block; }
 
 .grid-center { display: grid; place-items: center; }
 

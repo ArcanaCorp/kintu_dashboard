@@ -10,6 +10,7 @@ import ExperiencesView from "../app/dashboard/experiences";
 import Bookins from "../app/dashboard/bookins";
 import Loading from "../app/dashboard/loading";
 import WhatsappView from "../app/dashboard/whatsapp";
+import BlogView from "../app/dashboard/blog";
 
 export const routes = createBrowserRouter([
     {
@@ -51,7 +52,7 @@ export const routes = createBrowserRouter([
                     },
                     {
                         path: '/dashboard/blog',
-                        element: <Loading/>
+                        element: <BlogView/>,
                     },
                     {
                         path: '/dashboard/whatsapp',
